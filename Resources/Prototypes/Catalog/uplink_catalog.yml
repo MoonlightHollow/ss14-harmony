@@ -1630,6 +1630,7 @@
   #Increase cost to 12 to match higher tier suits
   #Commented out whitelist to allow traitors to also buy
   #End of summary
+  #Start of Harmony Change
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 7
@@ -1642,6 +1643,7 @@
 #    whitelist:
 #      tags:
 #      - NukeOpsUplink
+#Start of Harmony Change
 
 - type: listing
   id: UplinkHardsuitSyndieElite
