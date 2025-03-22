@@ -1625,25 +1625,14 @@
   description: uplink-syndie-raid-desc
   icon: { sprite: /Textures/Clothing/OuterClothing/Armor/syndie-raid.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateRaidBundle
-  #Harmony-Summary of changes
-  #Added to the ability to have it on discount, same as Elite Suit
-  #Increase cost to 12 to match higher tier suits
-  #Commented out whitelist to allow traitors to also buy
-  #End of summary
-  #Start of Harmony Change
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 7
-  cost:
-    Telecrystal: 12
   categories:
   - UplinkWearables
-#  conditions:
-#  - !type:StoreWhitelistCondition
-#    whitelist:
-#      tags:
-#      - NukeOpsUplink
-#Start of Harmony Change
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
 
 - type: listing
   id: UplinkHardsuitSyndieElite
