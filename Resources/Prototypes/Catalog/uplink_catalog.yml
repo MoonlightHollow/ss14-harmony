@@ -862,6 +862,13 @@
     Telecrystal: 4
   categories:
   - UplinkDeception
+  #Start of Harmony change
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+  #End of Harmony change
 
 # Disruption
 
@@ -1097,6 +1104,13 @@
     Telecrystal: 12
   categories:
     - UplinkDisruption
+  #Start of Harmony change
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+  #End of Harmony change
 
 - type: listing
   id: UplinkCameraBug
@@ -1249,6 +1263,13 @@
     Telecrystal: 6
   categories:
     - UplinkAllies
+  #Start of Harmony change
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+  #End of Harmony change
 
 - type: listing
   id: UplinkSyndicatePersonalAI
@@ -2082,10 +2103,12 @@
   - !type:BuyerJobCondition
     whitelist:
     - Janitor
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
+  #Start of Harmony change
+  #- !type:BuyerWhitelistCondition
+  #  blacklist:
+  #    components:
+  #    - SurplusBundle
+  #End of Harmony change
 
 - type: listing
   id: UplinkSyndicateSpongeBox
@@ -2125,10 +2148,12 @@
   - !type:BuyerJobCondition
     whitelist:
     - Librarian
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
+  #Change of Harmony change
+  #- !type:BuyerWhitelistCondition
+  #  blacklist:
+  #    components:
+  #    - SurplusBundle
+  #End of Harmony change
 
 - type: listing
   id: UplinkCombatBakery
