@@ -38,6 +38,12 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+//Harmony start-Cosmic Cult
+using Content.Server.Polymorph.Components;
+using Content.Shared._Impstation.CosmicCult.Components;
+using Content.Shared._Impstation.Ghost;
+using Robust.Shared.GameObjects;
+//Harmony end-Cosmic Cult
 
 namespace Content.Server.Ghost
 {
@@ -59,6 +65,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!; //Harmony-Cosmic Cult
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -104,6 +111,9 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
+            
+            SubscribeLocalEvent<MediumComponent, MapInitEvent>(OnMapInitMedium); // imp
+            SubscribeLocalEvent<MediumComponent, ComponentShutdown>(OnMediumShutdown); // imp
 
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
         }
@@ -116,6 +126,24 @@ namespace Content.Server.Ghost
                 args.VisibilityMask |= (int)VisibilityFlags.Ghost;
             }
         }
+        
+        // begin imp
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            
+            var query = EntityQueryEnumerator<MediumComponent>();
+            while (query.MoveNext(out var uid, out var comp))
+            {
+                comp.CurrentMediumTime += frameTime;
+                
+                if (comp.CurrentMediumTime > comp.MediumTime)
+                {
+                    EntityManager.RemoveComponent<MediumComponent>(uid);
+                }
+            }
+        }
+        // end imp
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
         {
@@ -200,12 +228,47 @@ namespace Content.Server.Ghost
                 _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
                 _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
             }
+            
+            SetCanSeeGhosts(uid, true, false); // imp
 
             _eye.RefreshVisibilityMask(uid);
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
         }
-
+        
+        // begin imp
+        private void OnMediumShutdown(EntityUid uid, MediumComponent component, ComponentShutdown args)
+        {
+            // Perf: If the entity is deleting itself, no reason to change these back.
+            if (Terminating(uid))
+                return;
+            
+            // Entity can't be seen by ghosts anymore.
+            if (TryComp(uid, out VisibilityComponent? visibility))
+            {
+                _visibilitySystem.RemoveLayer((uid, visibility), (int)VisibilityFlags.Ghost, false);
+                _visibilitySystem.AddLayer((uid, visibility), (int)VisibilityFlags.Normal, false);
+                _visibilitySystem.RefreshVisibility(uid, visibilityComponent: visibility);
+            }
+            
+            // Entity can't see ghosts anymore.
+            SetCanSeeGhosts(uid, false, false);
+        }
+        
+        private void SetCanSeeGhosts(EntityUid uid, bool canSee, bool medium, EyeComponent? eyeComponent = null)
+        {
+            if (!Resolve(uid, ref eyeComponent, false))
+                return;
+            
+            if (canSee)
+            {
+                _eye.SetVisibilityMask(uid, eyeComponent.VisibilityMask | (int)VisibilityFlags.Ghost, eyeComponent);
+                if (!medium)
+                    _eye.SetVisibilityMask(uid, eyeComponent.VisibilityMask | MonumentComponent.LayerMask); // IMP EDIT
+            }
+        }
+        // end imp
+        
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
         {
             // Perf: If the entity is deleting itself, no reason to change these back.
@@ -233,6 +296,13 @@ namespace Content.Server.Ghost
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
         }
+        
+        // begin imp
+        private void OnMapInitMedium(EntityUid uid, MediumComponent component, MapInitEvent args)
+        {
+            _actions.AddAction(uid, ref component.ToggleGhostsMediumActionEntity, component.ToggleGhostsMediumAction);
+        }
+        // end imp
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
         {

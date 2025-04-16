@@ -381,6 +381,22 @@ public abstract partial class SharedMindSystem : EntitySystem
         Del(objective);
         return true;
     }
+    
+    // #IMP EDIT BEGIN | currently loadbearing for Cosmic Cult's deconversion function. Used in Deconversion.
+    public void ClearObjectives(EntityUid mind, MindComponent? comp = null)
+    {
+        if (!Resolve(mind, ref comp))
+            return;
+        
+        foreach (var obj in comp.Objectives)
+        {
+            QueueDel(obj);
+        }
+        comp.Objectives.Clear();
+        comp.ObjectiveTargets.Clear();
+        Dirty(mind, comp);
+    }
+    // IMP EDIT END
 
     public bool TryGetObjectiveComp<T>(EntityUid uid, [NotNullWhen(true)] out T? objective) where T : IComponent
     {

@@ -23,6 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared._Impstation.CosmicCult.Components; // imp
 
 namespace Content.Server.Voting.Managers
 {
@@ -444,6 +445,15 @@ namespace Content.Server.Voting.Managers
                     if ((int)_timing.RealTime.Subtract(ghostComp.TimeOfDeath).TotalSeconds < _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime))
                         return false;
                 }
+                
+                if (eligibility == VoterEligibility.CosmicCult) // IMP EDIT BEGIN
+                {
+                    if (!_entityManager.HasComponent<CosmicCultComponent>(player.AttachedEntity))
+                        return false;
+                }
+                
+                return true;
+                // IMP EDIT END
             }
 
             if (eligibility == VoterEligibility.MinimumPlaytime)
@@ -550,7 +560,8 @@ namespace Content.Server.Voting.Managers
             All,
             Ghost, // Player needs to be a ghost
             GhostMinimumPlaytime, // Player needs to be a ghost, with a minimum playtime and deathtime as defined by votekick CCvars.
-            MinimumPlaytime //Player needs to have a minimum playtime and deathtime as defined by votekick CCvars.
+            MinimumPlaytime, //Player needs to have a minimum playtime and deathtime as defined by votekick CCvars.
+            CosmicCult // IMP EDIT | Player needs to be a cosmic cultist. Used by the cosmic cult gamemode.
         }
 
         #endregion

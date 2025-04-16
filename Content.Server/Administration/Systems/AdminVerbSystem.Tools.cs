@@ -7,6 +7,13 @@ using Content.Server.Atmos.Components;
 using Content.Server.Cargo.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
+//Harmony Start-Cosmic Cult
+using Content.Server._Impstation.Thaven;
+using Content.Server.Revenant.Components;
+using Content.Server.Revenant.EntitySystems;
+using Content.Shared._Impstation.Thaven.Components;
+using Content.Shared.Item;
+//Harmony End-Cosmic Cult
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
@@ -735,6 +742,44 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(setCapacity);
         }
+        
+        // begin impstation
+        if (TryComp<ThavenMoodsComponent>(args.Target, out var moods))
+        {
+            Verb addRandomMood = new()
+            {
+                Text = "Add Random Mood",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new ResPath("Interface/Actions/actions_borg.rsi"), "state-laws"),
+                Act = () =>
+                {
+                    _moods.TryAddRandomMood((args.Target, moods));
+                },
+                Impact = LogImpact.High,
+                Message = Loc.GetString("admin-trick-add-random-mood-description"),
+                Priority = (int) TricksVerbPriorities.AddRandomMood,
+            };
+            args.Verbs.Add(addRandomMood);
+        }
+        else
+        {
+            Verb giveMoods = new()
+            {
+                Text = "Give Moods",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new ResPath("Interface/Actions/actions_borg.rsi"), "state-laws"),
+                Act = () =>
+                {
+                    if (!EnsureComp<ThavenMoodsComponent>(args.Target, out moods))
+                        _moods.NotifyMoodChange((args.Target, moods));
+                },
+                Impact = LogImpact.High,
+                Message = Loc.GetString("admin-trick-give-moods-description"),
+                Priority = (int) TricksVerbPriorities.AddRandomMood,
+            };
+            args.Verbs.Add(giveMoods);
+        }
+        // end impstation
     }
 
     private void RefillEquippedTanks(EntityUid target, Gas gasType)
@@ -880,5 +925,11 @@ public sealed partial class AdminVerbSystem
         SnapJoints = -27,
         MakeMinigun = -28,
         SetBulletAmount = -29,
+        //Harmony Start-Cosmic Cult
+        //MakeAnimate = -30,
+        //MakeInanimate = -31,
+        AddRandomMood = -32,
+        AddCustomMood = -33,
+        //Harmony End-Cosmic Cult
     }
 }

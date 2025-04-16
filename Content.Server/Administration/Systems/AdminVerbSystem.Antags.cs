@@ -12,6 +12,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Server._Impstation.CosmicCult.Components;
 
 namespace Content.Server.Administration.Systems;
 
@@ -183,6 +184,23 @@ public sealed partial class AdminVerbSystem
             Impact = LogImpact.High,
             Message = string.Join(": ", paradoxCloneName, Loc.GetString("admin-verb-make-paradox-clone")),
         };
+        
+        // IMPSTATION - COSMIC CULT
+        //note - the UI for the monument currently doesn't properly account for cultists added like this until it gets sent a new state - ruddygreat
+        //todo figure out how to fix that
+        Verb cosmiccult = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-cosmiccultist"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/_Impstation/CosmicCult/Icons/antag_icons.rsi"), "CosmicCult"),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<CosmicCultRuleComponent>(targetPlayer, "CosmicCult");
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-cosmiccultist"),
+        };
+        args.Verbs.Add(cosmiccult);
 
         if (HasComp<HumanoidAppearanceComponent>(args.Target)) // only humanoids can be cloned
             args.Verbs.Add(paradox);
