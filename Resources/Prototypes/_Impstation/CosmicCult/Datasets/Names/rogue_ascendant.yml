@@ -1,0 +1,6 @@
+﻿#Harmony addition
+- type: localizedDataset
+  id: NamesRogueAscendant
+  values:
+    prefix: name-dataset-ascendant-dataset
+    count: 16
