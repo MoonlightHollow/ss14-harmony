@@ -170,19 +170,21 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
-  - type: Inventory # imp
+  #Imp change start
+  - type: Inventory
     templateId: dragon
-  - type: InventorySlots # imp
-  - type: Loadout # imp
+  - type: InventorySlots
+  - type: Loadout
     prototypes:
       - StartingGearDragonPinpointer
-  - type: Strippable # imp
-  - type: UserInterface # imp
+  - type: Strippable
+  - type: UserInterface
     interfaces:
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
-  - type: Hands # imp. don't worry, they don't actually have hands.
-  - type: ComplexInteraction # imp. necessary for them to be able to use the pinpointer. This doesn't do much else for them, except I think they can now open crates. 
+  - type: Hands # They don't actually have hands.
+  - type: ComplexInteraction # Necessary for them to be able to use the pinpointer. This also allow them to interact with most things i.e UI and crates
+  #Imp change end
 
 - type: entity
   categories: [ HideSpawnMenu ]
