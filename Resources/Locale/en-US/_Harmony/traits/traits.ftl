@@ -54,3 +54,6 @@ trait-illeism-desc = You seem to only be able to refer to yourself by name.
 
 trait-scandinavian-name = Scandinavian accent
 trait-scandinavian-desc = You have to assemble the sentence yourself.
+
+trait-uncloneable-name = Uncloneable
+trait-uncloneable-desc = You are unable to be cloned
