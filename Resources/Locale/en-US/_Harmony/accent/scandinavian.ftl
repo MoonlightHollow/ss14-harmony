@@ -57,3 +57,15 @@ accent-scandinavian-words-replace-18 = kaffi
 
 accent-scandinavian-words-19 = lemon
 accent-scandinavian-words-replace-19 = citron
+
+accent-scandinavian-words-20 = drunk
+accent-scandinavian-words-replace-20 = kanakis
+
+accent-scandinavian-words-21 = hungover
+accent-scandinavian-words-replace-21 = bakis
+
+accent-scandinavian-words-22 = scientist
+accent-scandinavian-words-replace-22 = besserwisser
+
+accent-scandinavian-words-23 = officer
+accent-scandinavian-words-replace-23 = strålis
