@@ -83,7 +83,7 @@
     back:
     - GoldRing
 
-  id: Cane
+- id: Cane
   storage:
     back:
     - Cane
