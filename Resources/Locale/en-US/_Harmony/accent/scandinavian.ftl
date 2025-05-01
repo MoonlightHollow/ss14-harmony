@@ -69,3 +69,6 @@ accent-scandinavian-words-replace-22 = besserwisser
 
 accent-scandinavian-words-23 = officer
 accent-scandinavian-words-replace-23 = strålis
+
+accent-scandinavian-words-24 = damn
+accent-scandinavian-words-replace-24 = perkele
