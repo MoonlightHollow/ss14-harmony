@@ -83,7 +83,8 @@
     back:
     - GoldRing
 
-- id: Cane
+- type: loadout
+  id: Cane
   storage:
     back:
     - Cane
