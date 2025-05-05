@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Sprite taken from Imp-Station at https://github.com/impstation/imp-station-14/pull/2229",
+    "copyright": "Sprite taken from Imp-Station at https://github.com/impstation/imp-station-14/commit/119c7ab1b794fdd201b75030341c9d7dc435f93a",
     "states": [
         {
             "name": "pinonalert",
