@@ -18,7 +18,6 @@
     - Human
     - Moth
     - Reptilian
-    - Avali # Latestation
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
