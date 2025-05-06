@@ -23,6 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared._DV.CosmicCult.Components; // DeltaV - Cosmic Cult
 
 namespace Content.Server.Voting.Managers
 {
@@ -452,6 +453,12 @@ namespace Content.Server.Voting.Managers
                 if (!playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) || overallTime < TimeSpan.FromHours(_cfg.GetCVar(CCVars.VotekickEligibleVoterPlaytime)))
                     return false;
             }
+            
+            // Begin DeltaV - Cosmic Cult
+            if (eligibility == VoterEligibility.CosmicCult)
+                if (!_entityManager.HasComponent<CosmicCultComponent>(player.AttachedEntity))
+                    return false;
+            // End DeltaV - Cosmic Cult
 
             return true;
         }
@@ -550,7 +557,8 @@ namespace Content.Server.Voting.Managers
             All,
             Ghost, // Player needs to be a ghost
             GhostMinimumPlaytime, // Player needs to be a ghost, with a minimum playtime and deathtime as defined by votekick CCvars.
-            MinimumPlaytime //Player needs to have a minimum playtime and deathtime as defined by votekick CCvars.
+            MinimumPlaytime, //Player needs to have a minimum playtime and deathtime as defined by votekick CCvars.
+            CosmicCult // DeltaV - Player needs to be a cosmic cultist. Used by the cosmic cult gamemode.
         }
 
         #endregion

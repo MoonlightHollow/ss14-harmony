@@ -9,6 +9,7 @@ namespace Content.Shared.Eye
         None   = 0,
         Normal = 1 << 0,
         Ghost  = 1 << 1,
+        CosmicCultMonument = 1 << 4, // DeltaV - Cosmic Cult
         Subfloor = 1 << 2,
     }
 }

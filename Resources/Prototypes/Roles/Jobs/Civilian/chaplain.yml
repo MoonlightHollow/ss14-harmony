@@ -6,6 +6,7 @@
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hop
+  canBeAntag: false # DeltaV - Can't be antag in case of Cultist antag presence. Remove this flag when antagselection is granularized.
   access:
   - Chapel
   - Maintenance
