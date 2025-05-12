@@ -76,6 +76,12 @@
   storage:
     back:
     - Cane
+      
+- type: loadout
+  id: PlushieExperiment
+  storage:
+    back:
+      - PlushieExperiment  
 
 # Towels
 - type: loadout

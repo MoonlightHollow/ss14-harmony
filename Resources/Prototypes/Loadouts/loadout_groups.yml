@@ -10,7 +10,10 @@
   - Headphones
   - PlushieLizard
   - PlushieSpaceLizard
-  - PlushieVox # Harmony
+  # Start harmony change - Plushies
+  - PlushieVox
+  - PlushieExperiment
+  # End harmony change - Plushies
   - ThreeCandles
   - Lighter
   - CigPackGreen
