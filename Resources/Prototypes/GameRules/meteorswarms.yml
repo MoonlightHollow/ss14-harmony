@@ -83,6 +83,12 @@
   components:
   - type: GameRule
   - type: RampingStationEventScheduler
+    timeKeyPoints: # DeltaV Start
+      - 14, 16
+      - 32, 8
+      - 32, 6
+      - 8, 4
+      - 32, 12 # DeltaV End
     scheduledGameRules: !type:NestedSelector
       tableId: BasicMeteorSwarmEventsTable
 
