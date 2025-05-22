@@ -401,6 +401,12 @@
   parent: BaseGameRule
   components:
   - type: RampingStationEventScheduler
+    timeKeyPoints: # DeltaV Start
+      - 14, 16
+      - 32, 8
+      - 32, 4
+      - 8, 2
+      - 32, 8 # DeltaV End
     scheduledGameRules: !type:NestedSelector
       tableId: BasicGameRulesTable
 
